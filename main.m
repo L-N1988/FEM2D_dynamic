@@ -11,19 +11,19 @@ sumNode = size(node,1);
 elem = load('ELIST.DAT');
 sumElem = size(elem,1);
 fixNode = load('fixNode.dat');
-nodeForce = load('nodeForce.dat'); % ½ÚµãÁ¦
+nodeForce = load('nodeForce.dat'); % èŠ‚ç‚¹åŠ›
 nodeForce(1,:) = [];
 
 % -------------------------------------------------------------------------
-mat = [200000,0.3,1;]; % µ¯ĞÔÄ£Á¿¡¢²´ËÉ±È¡¢ÃÜ¶È, ¶àÖÖ²ÄÁÏĞèÒª»»ĞĞ
+mat = [200000,0.3,1;]; % å¼¹æ€§æ¨¡é‡ã€æ³Šæ¾æ¯”ã€å¯†åº¦, å¤šç§ææ–™éœ€è¦æ¢è¡Œ
 ndim = 2;isStress = 1; % 1-plane stress 0-plane strain
 
 % dynamic parameters-------
-alpha1 = 0;alpha2 = 0;  % ÈğÀû×èÄáÏµÊı
+alpha1 = 0;alpha2 = 0;  % ç‘åˆ©é˜»å°¼ç³»æ•°
 alpha = 0.25250625;  % alpha and delta
 delta = 0.505;
 
-h = 1;   % Ó¦ÓÃÓÚ¶şÎ¬ÎÊÌâ£¬Ä¬ÈÏÊÇ1
+h = 1;   % åº”ç”¨äºäºŒç»´é—®é¢˜ï¼Œé»˜è®¤æ˜¯1
 
 matID  = elem(:,2); % material num
 EX = mat(matID,1); % E
@@ -34,37 +34,37 @@ elem(:,1:2) = [];
 node(:,1)   = [];
 node = node(:,1:ndim);
 
-mnode = size(elem,2);  % µ¥ÔªÀàĞÍ
+mnode = size(elem,2);  % å•å…ƒç±»å‹
 
 if mnode == 4
-    reduce = 0;  % ÊÇ·ñ²ÉÓÃ¼õËõ»ı·Ö£¬Îª1±íÊ¾¾Í²ÉÓÃ¼õËõ»ı·Ö£¬0±íÊ¾È«»ı·Ö¡£
+    reduce = 0;  % æ˜¯å¦é‡‡ç”¨å‡ç¼©ç§¯åˆ†ï¼Œä¸º1è¡¨ç¤ºå°±é‡‡ç”¨å‡ç¼©ç§¯åˆ†ï¼Œ0è¡¨ç¤ºå…¨ç§¯åˆ†ã€‚
 else
     reduce = 1;  
 end
 
-% ---------------------------×ª»¯Ñ¹Ç¿---------------------------------------
+% ---------------------------è½¬åŒ–å‹å¼º---------------------------------------
 if exist('press.dat','file')
     fprintf(1,'trans the pressure\n')
     nodeForceNew = transPres(node,elem,ndim,mnode);
     nodeForce = [nodeForce;nodeForceNew];
 end
 
-% ----------------------------ĞÎ³É×ÜÌå¸Õ¶ÈÕó--------------------------------
+% ----------------------------å½¢æˆæ€»ä½“åˆšåº¦é˜µ--------------------------------
 fprintf(1,'sort the global K\n')
 
 [GK_u,GK_v,GK_a] = globalK2D(EX,mu,h,elem,node,isStress,reduce,mnode);
 M = globalM(ro,ndim,mnode,node,elem);
-% ----------------------------µÚÒ»Àà±ß½çÌõ¼ş-----------------------------------
+% ----------------------------ç¬¬ä¸€ç±»è¾¹ç•Œæ¡ä»¶-----------------------------------
 fprintf(1,'boundary condition\n')
 
-% ¶Ô½ÇÔª¸Ä1·¨Ê©¼ÓµÚÒ»Àà±ß½çÌõ¼ş
+% å¯¹è§’å…ƒæ”¹1æ³•æ–½åŠ ç¬¬ä¸€ç±»è¾¹ç•Œæ¡ä»¶
 [GK,force] = boundary_chang_one(GK_u,GK_v,GK_a,fixNode,nodeForce,sumNode,ndim);
 
-% ----------------------------Çó½â·½³Ì--------------------------------------
+% ----------------------------æ±‚è§£æ–¹ç¨‹--------------------------------------
 fprintf(1,'solve the dynamic equation\n')
-% Éú³É×èÄáÕó
-C = alpha1*M+alpha2*GK; % ÈğÀû×èÄá
-x = NewMark(alpha,delta,GK,M,C,force,sumTime,dt,ndim);% x Îª·ÇÏ¡Êè¾ØÕó
+% ç”Ÿæˆé˜»å°¼é˜µ
+C = alpha1*M+alpha2*GK; % ç‘åˆ©é˜»å°¼
+x = NewMark(alpha,delta,GK,M,C,force,sumTime,dt,ndim);% x ä¸ºéç¨€ç–çŸ©é˜µ
 
 % post
 % show the contour at step 20

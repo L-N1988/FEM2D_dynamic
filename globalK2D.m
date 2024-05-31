@@ -1,10 +1,10 @@
 function [u,v,a] = globalK2D(elemEX,elemMu,h,elem,node,isStress,reduce,mnode)
-% Éú³É×ÜÌå¸Õ¶È¾ØÕó
-% ÊÊÓÃÓÚ¶şÎ¬ÎÊÌâ
-% ×ÜÌå¸Õ¶ÈÕóGK²ÉÓÃĞĞ-ÁĞ-Öµ(u-v-a)µÄÏ¡Êè¾ØÕóĞÎÊ½´æ´¢
+% ç”Ÿæˆæ€»ä½“åˆšåº¦çŸ©é˜µ
+% é€‚ç”¨äºäºŒç»´é—®é¢˜
+% æ€»ä½“åˆšåº¦é˜µGKé‡‡ç”¨è¡Œ-åˆ—-å€¼(u-v-a)çš„ç¨€ç–çŸ©é˜µå½¢å¼å­˜å‚¨
 % sumNode = size(node,1);
 sumElem = size(elem,1);
-% ÅĞ¶ÏÊÇ·ñÊä³öÓ¦Á¦
+% åˆ¤æ–­æ˜¯å¦è¾“å‡ºåº”åŠ›
 if mnode == 4
     if reduce == 0
         B = zeros(3*4*sumElem,8);
@@ -20,7 +20,7 @@ elseif mnode == 8
 end
 D = zeros(sumElem*3,3);
 
-u = zeros(sumElem*(mnode*2)*(mnode*2),1); % Ï¡Êè¾ØÕóµÄĞĞ-ÁĞ-Öµ
+u = zeros(sumElem*(mnode*2)*(mnode*2),1); % ç¨€ç–çŸ©é˜µçš„è¡Œ-åˆ—-å€¼
 v = zeros(sumElem*(mnode*2)*(mnode*2),1);
 a = zeros(sumElem*(mnode*2)*(mnode*2),1);
 
@@ -38,11 +38,11 @@ if mnode == 4
         y3 = node(elem(n,3),2);
         x4 = node(elem(n,4),1);
         y4 = node(elem(n,4),2);
-        K = elemK2D4(EX,mu,h,x1,y1,x2,y2,x3,y3,x4,y4,isStress,reduce);  % Éú³Éµ¥Ôª¸Õ¶ÈÕó
+        K = elemK2D4(EX,mu,h,x1,y1,x2,y2,x3,y3,x4,y4,isStress,reduce);  % ç”Ÿæˆå•å…ƒåˆšåº¦é˜µ
         nodeID = elem(n,:);
         ndfID([1,3,5,7]) = nodeID*2-1;
         ndfID([2,4,6,8]) = nodeID*2;
-        ddd = repmat(ndfID,8,1); % ddd ÎªÁÙÊ±±äÁ¿£¬ÎŞÊµ¼ÊÒâÒå
+        ddd = repmat(ndfID,8,1); % ddd ä¸ºä¸´æ—¶å˜é‡ï¼Œæ— å®é™…æ„ä¹‰
         u(64*(n-1)+1:64*n) = ddd(:);
         v(64*(n-1)+1:64*n) = repmat(ndfID,1,8);
         a(64*(n-1)+1:64*n) = K(:);
@@ -59,11 +59,11 @@ else % mnode == 8
             x(m) = node(elem(n,m),1);
             y(m) = node(elem(n,m),2);
         end
-        K = elemK2D8(EX,mu,h,x,y,isStress,reduce);  % Éú³Éµ¥Ôª¸Õ¶ÈÕó
+        K = elemK2D8(EX,mu,h,x,y,isStress,reduce);  % ç”Ÿæˆå•å…ƒåˆšåº¦é˜µ
         nodeID = elem(n,:);
         ndfID([1,3,5,7,9,11,13,15]) = nodeID*2-1;
         ndfID([2,4,6,8,10,12,14,16]) = nodeID*2;
-        ddd = repmat(ndfID,16,1); % ddd ÎªÁÙÊ±±äÁ¿£¬ÎŞÊµ¼ÊÒâÒå
+        ddd = repmat(ndfID,16,1); % ddd ä¸ºä¸´æ—¶å˜é‡ï¼Œæ— å®é™…æ„ä¹‰
         u(256*(n-1)+1:256*n) = ddd(:);
         v(256*(n-1)+1:256*n) = repmat(ndfID,1,16);
         a(256*(n-1)+1:256*n) = K(:);

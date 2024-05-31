@@ -1,5 +1,5 @@
 function [J,B] = elemB2D4(x1,y1,x2,y2,x3,y3,x4,y4,ks,yt)
-% 返回单元B矩阵，适应于四节点四边形有限元
+% 杩斿洖鍗曞厓B鐭╅樀锛岄�傚簲浜庡洓鑺傜偣鍥涜竟褰㈡湁闄愬厓
 B = zeros(3,8);
 x = [x1,x2,x3,x4]';
 y = [y1,y2,y3,y4]';

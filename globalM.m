@@ -1,11 +1,11 @@
 function M = globalM(ro,ndim,mnode,node,elem)
-% ĞÎ³É×ÜÌåÖÊÁ¿Õó
-% µ÷ÓÃelemMass
-% ÊÊÓÃÓÚÏÖÓĞµÄËùÓĞÇé¿ö
+% å½¢æˆæ€»ä½“è´¨é‡é˜µ
+% è°ƒç”¨elemMass
+% é€‚ç”¨äºç°æœ‰çš„æ‰€æœ‰æƒ…å†µ
 sumNode = size(node,1);
 sumElem = size(elem,1);
 
-u = zeros(sumElem*(mnode*ndim)*(mnode*ndim),1); % Ï¡Êè¾ØÕóµÄĞĞ-ÁĞ-Öµ
+u = zeros(sumElem*(mnode*ndim)*(mnode*ndim),1); % ç¨€ç–çŸ©é˜µçš„è¡Œ-åˆ—-å€¼
 v = zeros(sumElem*(mnode*ndim)*(mnode*ndim),1);
 a = zeros(sumElem*(mnode*ndim)*(mnode*ndim),1);
 
@@ -14,7 +14,7 @@ sumndf = (ndim*mnode)^2;
 for n = 1:sumElem
     coor = node(elem(n,:),:);
     
-    elemM = elemMass(ndim,mnode,ro(n),coor); % ËùµÃµ½µÄµ¥ÔªÖÊÁ¿Õó
+    elemM = elemMass(ndim,mnode,ro(n),coor); % æ‰€å¾—åˆ°çš„å•å…ƒè´¨é‡é˜µ
     nodeID = elem(n,:);
     if ndim == 2
         ndfID(1:ndim:mnode*ndim-1) = nodeID*ndim-1;
@@ -24,7 +24,7 @@ for n = 1:sumElem
         ndfID(2:ndim:mnode*ndim-1) = nodeID*3-1;
         ndfID(3:ndim:mnode*ndim) = nodeID*3;
     end
-    ddd = repmat(ndfID,ndim*mnode,1); % ddd ÎªÁÙÊ±±äÁ¿£¬ÎŞÊµ¼ÊÒâÒå
+    ddd = repmat(ndfID,ndim*mnode,1); % ddd ä¸ºä¸´æ—¶å˜é‡ï¼Œæ— å®é™…æ„ä¹‰
     u(sumndf*(n-1)+1:sumndf*n) = ddd(:);
     v(sumndf*(n-1)+1:sumndf*n) = repmat(ndfID,1,ndim*mnode);
     a(sumndf*(n-1)+1:sumndf*n) = elemM(:);

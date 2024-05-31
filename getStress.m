@@ -6,7 +6,7 @@ if ndim == 2
 else
     nip = 8;
 end
-ndimB = ndim*3-3;  % µ¥ÔªB¾ØÕóµÄÎ¬Êı£¬¶şÎ¬Îª3£¬ÈıÎ¬Îª6
+ndimB = ndim*3-3;  % å•å…ƒBçŸ©é˜µçš„ç»´æ•°ï¼ŒäºŒç»´ä¸º3ï¼Œä¸‰ç»´ä¸º6
 s = zeros(sumElem*nip*ndimB,1);
 
 % [nodeNdfID,~,rst] = find(u);
@@ -34,7 +34,7 @@ if ndim == 2
 end
 
 for n = 1:sumElem
-    s(nip*(n-1)+1:nip*n,:) = invs*s(nip*(n-1)+1:nip*n,:);  % °´µ¥ÔªÅÅĞòµÄÓ¦Á¦Öµ
+    s(nip*(n-1)+1:nip*n,:) = invs*s(nip*(n-1)+1:nip*n,:);  % æŒ‰å•å…ƒæ’åºçš„åº”åŠ›å€¼
 end
 
 stress = zeros(sumNode,ndimB);

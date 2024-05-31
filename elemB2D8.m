@@ -1,5 +1,5 @@
 function [J,B] = elemB2D8(x,y,ks,yt)
-% 返回单元B矩阵，适应于四节点四边形有限元
+% 杩斿洖鍗曞厓B鐭╅樀锛岄�傚簲浜庡洓鑺傜偣鍥涜竟褰㈡湁闄愬厓
 B = zeros(3,16);
 [N_ks,N_yt] = dfun2D(ks,yt,8);
 J = jacobi2D(x,y,N_ks,N_yt);

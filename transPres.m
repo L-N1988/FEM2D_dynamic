@@ -1,8 +1,8 @@
 function nodeForceNew = transPres(node,elem,ndim,mnode)
-% ��ѹǿת��Ϊ��Ч�ڵ���
-% ��Ԫ��ѹΪ��
-% ֻ�Ƿ�����,����������
-% ���������������ֵ���ּ��㣬�����
+% 将压强转化为等效节点力
+% 单元受压为正
+% 只记法向力,不计切向力
+% 解析表达，可以用数值积分计算，会更简单
 % mnode == 4
 % 4----3
 % |    |
@@ -24,15 +24,15 @@ if ndim == 2
     end
 end
 if ~isempty(press)
-elemP = press(:,1); % ��Ԫ���
-face  = press(:,2); % ���
-pres  = press(:,3); % ѹ��ֵ����ֵ��ʾ��ѹ
+elemP = press(:,1); % 单元编号
+face  = press(:,2); % 面号
+pres  = press(:,3); % 压力值，正值表示受压
 
 if ndim == 2
     if mnode == 4
         faceNode = [1,2;2,3;3,4;4,1];
         for n = 1:sumPre
-            bNode = elem(elemP(n),faceNode(face(n),:)); % ��Ԫ�ı߽�ڵ�
+            bNode = elem(elemP(n),faceNode(face(n),:)); % 单元的边界节点
             nodeForceNew(4*n-3,1) = bNode(1);
             nodeForceNew(4*n-2,1) = bNode(1);
             nodeForceNew(4*n-1,1) = bNode(2);

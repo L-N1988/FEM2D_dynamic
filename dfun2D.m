@@ -1,5 +1,5 @@
 function [N_ks,N_yt] = dfun2D(ks,yt,mnode)
-% 求形函数的导数，二维
+% 姹傚舰鍑芥暟鐨勫鏁帮紝浜岀淮
 if mnode == 4
     N_ks = zeros(4,1);
     N_yt = zeros(4,1);

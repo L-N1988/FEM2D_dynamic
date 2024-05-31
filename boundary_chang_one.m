@@ -1,6 +1,6 @@
 function [GK,force] = boundary_chang_one(GK_u,GK_v,GK_a,fixNode,nodeForce,sumNode,ndim)
-% ¶Ô½ÇÔª¸Ä1·¨ÒıÈë±ß½çÌõ¼ş
-% ½öÊÊÓÃÓÚ¸ø¶¨Î»ÒÆÊÇ0Î»ÒÆÊ±
+% å¯¹è§’å…ƒæ”¹1æ³•å¼•å…¥è¾¹ç•Œæ¡ä»¶
+% ä»…é€‚ç”¨äºç»™å®šä½ç§»æ˜¯0ä½ç§»æ—¶
 
 fixNodeNew   = (fixNode(:,1)-1)*ndim+fixNode(:,2);
 if ~isempty(nodeForce)
@@ -9,7 +9,7 @@ else
     nodeForceNew = [];
 end
 
-% ĞÎ³É¸Õ¶ÈÕóºÍÔØºÉÏòÁ¿
+% å½¢æˆåˆšåº¦é˜µå’Œè½½è·å‘é‡
 %sumFix   = size(fixNode,1);
 sumForce = size(nodeForceNew,1);
 
@@ -19,7 +19,7 @@ c(fixNodeNew) = 0;
 b = sparse(a,a,c,sumNode*ndim,sumNode*ndim);
 
 GK = sparse(GK_u,GK_v,GK_a,sumNode*ndim,sumNode*ndim);
-GK = b*GK*b;  % ÏûÈ¥fixNodeNewĞĞÁĞ
+GK = b*GK*b;  % æ¶ˆå»fixNodeNewè¡Œåˆ—
 GK = GK  -(b-speye(sumNode*ndim));
 
 

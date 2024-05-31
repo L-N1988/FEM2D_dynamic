@@ -1,5 +1,5 @@
 function N = fun(ks,yt,zita,ndim,mnode)
-% 四节点四边形的形函数
+% 鍥涜妭鐐瑰洓杈瑰舰鐨勫舰鍑芥暟
 N = zeros(mnode,1);
 if ndim == 2
     if mnode == 4
